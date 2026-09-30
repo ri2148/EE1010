@@ -1,3 +1,6 @@
+#Code by Arjun
+#Date:28-06-26
+
 import numpy as np
 import matplotlib.pyplot as plt
 import subprocess 
@@ -8,11 +11,8 @@ A = np.array([[1, 1],
               [3, 1]])
 B = np.array([7, 13])
 
-# Method 1: Direct matrix inverse (X = A^-1 * B)
-A_inv = np.linalg.inv(A)
-X_inv = np.dot(A_inv, B)
 
-# Method 2: Direct linear solver
+#Directly solving
 X_solve = np.linalg.solve(A, B)
 
 x_val, y_val = X_solve[0], X_solve[1]
@@ -41,7 +41,6 @@ plt.xlim(-1, 7)
 plt.ylim(-1, 10)
 plt.xlabel('x', fontsize=12)
 plt.ylabel('y', fontsize=12)
-plt.title('Intersection of Lines: x + y = 7 and 3x + y = 13', fontsize=14)
 plt.grid(True, linestyle=':', alpha=0.6)
 plt.legend(fontsize=11)
 plt.savefig("Plot.pdf")
