@@ -1,0 +1,56 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import subprocess
+import shlex
+
+# Set max n
+N_MAX=10
+
+# Arrays to store values
+n_vals = np.arange(N_MAX + 1)
+T_numerical = np.zeros(N_MAX + 1)
+T_theoretical = np.zeros(N_MAX + 1)
+
+# 1. Calculate Numerical values using Recurrence Relation: T(n) = 2*T(n-1) + n*2^n
+# Initial condition: T(0) = 1
+T_numerical[0] = 1.0
+for n in range(1, N_MAX + 1):
+    T_numerical[n] = 2.0 * T_numerical[n - 1] + n * (2.0 ** n)
+
+# 2. Calculate Theoretical values using Closed-Form Formula: T(n) = (1 + (n^2 + n)/2) * 2^n
+for n in range(N_MAX + 1):
+    T_theoretical[n] = (1.0 + (n**2 + n) / 2.0) * (2.0 ** n)
+
+# 3. Print verified values for T(0), T(1), T(2), and T(100)
+special_indices = [0, 1, 2, 100]
+print("--- Verification of T(n) Values ---")
+for idx in special_indices:
+    print(f"T({idx:3d}): Numerical = {T_numerical[idx]:.6e} | Theoretical = {T_theoretical[idx]:.6e}")
+
+# 4. Plot Numerical vs Theoretical
+plt.figure(figsize=(10, 6))
+
+# Line plot for theoretical solution
+plt.plot(n_vals, T_theoretical, label="Theoretical: $T(n) = \\left(1 + \\frac{n^2+n}{2}\\right)2^n$", color="blue", linewidth=2)
+
+# Scatter points for numerical solution
+plt.scatter(n_vals, T_numerical, label="Numerical (Recurrence)", color="red", linestyle='None', marker='o', s=15, alpha=0.7)
+
+# Annotate key points
+for idx in special_indices:
+    plt.scatter(n_vals[idx], T_numerical[idx], color='black', zorder=5)
+    plt.annotate(f"T({idx})", (n_vals[idx], T_numerical[idx]), 
+                 textcoords="offset points", xytext=(-15, 10), ha='center',
+                 fontsize=9, fontweight='bold')
+
+# Use Log scale because 2^100 ≈ 1.26e30 grows extremely fast
+plt.yscale("log")
+plt.xlabel("n", fontsize=12)
+plt.ylabel("T(n) [Log Scale]", fontsize=12)
+plt.title("Theoretical vs Numerical Verification of $T(n) = 2T(n-1) + n2^n$", fontsize=14)
+plt.legend(fontsize=11)
+plt.grid(True, which="both", linestyle="--", alpha=0.5)
+
+plt.tight_layout()
+plt.savefig("Plot.pdf")
+subprocess.run(shlex.split("termux-open Plot.pdf"))
