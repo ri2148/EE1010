@@ -1,6 +1,10 @@
+#Code by Arjun
+#Date:07=-10-26
+
 import matplotlib.pyplot as plt
 import numpy as np
-
+import subprocess
+import shlex
 
 # 1. Calculate values of 'a' and 'b' using analytical derivatives
 # Right-hand function: f(x) = x^3 + x^2 + 1 for x >= 1
@@ -74,5 +78,6 @@ plt.axhline(0, color="gray", linestyle=":", linewidth=0.8)
 plt.legend()
 plt.grid(True, linestyle="--", alpha=0.6)
 
-plt.show()
+plt.savefig("Plot.pdf")
+subprocess.run(shlex.split("termux-open Plot.pdf"))
 
