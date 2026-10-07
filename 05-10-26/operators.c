@@ -10,17 +10,3 @@ int main(void) {
     printf("a & b  = %d\n", a & b);   // Output: 8 (bitwise: 1100 & 1010 = 1000)
     printf("a && b = %d\n\n", a && b); // Output: 1 (logical: true AND true)
 
-    // 2. Short-circuit demonstration
-    int x = 0;
-printf("Demonstration with x=0 and 0\n");
-    // && skips the right side if left is 0
-    if (0 && ++x) {}
-    printf("x after &&: %d\n", x); // x is still 0
-
-    // & always evaluates both sides
-    if (0 & ++x) {}
-    printf("x after & : %d\n", x); // x becomes 1
-
-    return 0;
-}
-
