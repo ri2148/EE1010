@@ -78,6 +78,6 @@ plt.axhline(0, color="gray", linestyle=":", linewidth=0.8)
 plt.legend()
 plt.grid(True, linestyle="--", alpha=0.6)
 
-plt.savefig("Plot.pdf")
-subprocess.run(shlex.split("termux-open Plot.pdf"))
+plt.savefig("Plot.png")
+subprocess.run(shlex.split("termux-open Plot.png"))
 
