@@ -4,47 +4,41 @@
 #include "listgen.h"
 #include "listfun.h"
 
-// Helper function to print a vector formatted to 2 decimal places
-void printVector(sadish *a)
-{
-    while (a != NULL)
-    {
-        printf("%.2lf ", a->data);
-        a = a->next;
-    }
-    printf("\n");
-}
-
 int main()
 {
-    // Define vector lengths
-    int n1 = 9; // Number of elements in vec1.dat
-    int n2 = 7; // Number of elements in vec2.dat
+    int n1 = 9, n2 = 7;
 
-    // Open file pointers
     FILE *fp1 = fopen("vec1.dat", "r");
     FILE *fp2 = fopen("vec2.dat", "r");
 
-    if (fp1 == NULL || fp2 == NULL)
-    {
-        printf("Error: Could not open vector data files.\n");
-        return 1;
-    }
+    if (!fp1 || !fp2) return 1;
 
-    // Load vectors from files using loadVec from listgen.h
-    sadish *v1 = loadVec(fp1, n1);
-    sadish *v2 = loadVec(fp2, n2);
+    // 1. Read directly into an avyuh matrix structure
+    avyuh *matrix = (avyuh *)malloc(sizeof(avyuh));
+    matrix->vector = loadVec(fp1, n1); // Row 1[span_2](start_span)[span_2](end_span)
 
-    // Close files
+    matrix->next = (avyuh *)malloc(sizeof(avyuh));
+    matrix->next->vector = loadVec(fp2, n2); // Row 2[span_3](start_span)[span_3](end_span)
+    matrix->next->next = NULL;
+
     fclose(fp1);
     fclose(fp2);
 
-    // Print vectors
-    printf("Vector 1: ");
-    printVector(v1);
+    // 2. Pad row 2 with zeros manually in a simple loop
+    sadish *curr = matrix->next->vector;
+    while (curr->next != NULL) curr = curr->next; // Find tail
 
-    printf("Vector 2: ");
-    printVector(v2);
+    for (int i = n2; i < n1; i++)
+    {
+        curr->next = (sadish *)malloc(sizeof(sadish));
+        curr = curr->next;
+        curr->data = 0.0;
+        curr->next = NULL;
+    }
+
+    // 3. Use the built-in printList function from listgen.h
+    printf("Combined Avyuh:\n");
+    printList(matrix);
 
     return 0;
 }
