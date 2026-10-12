@@ -34,7 +34,7 @@ int main(void) {
 
     printf("\nReturned back to initial state %d%d%d%d after %d transitions.\n", Q3, Q2, Q1, Q0, count);
     printf("Initial State: %d%d%d%d\n", initial_Q3, initial_Q2, initial_Q1, initial_Q0);
-    printf("Required Answer (Number of distinct states): %d\n", count);
+    printf("Number of distinct states): %d\n", count);
 
     return 0;
 }
